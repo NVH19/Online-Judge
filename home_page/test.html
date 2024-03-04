@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quản lý kỳ thi</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .exam-list {
+        list-style-type: none;
+        padding: 0;
+    }
+    .exam-item {
+        padding: 10px;
+        margin-bottom: 5px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+    }
+    .free-access {
+        background-color: lightgreen;
+    }
+    .time-bound {
+        background-color: lightblue;
+    }
+</style>
+</head>
+<body>
+<h1>Danh sách kỳ thi</h1>
+<input type="text" id="searchInput" onkeyup="searchExams()" placeholder="Tìm kiếm theo tên...">
+<select id="filterSelect" onchange="filterExams()">
+    <option value="all">Tất cả trạng thái</option>
+    <option value="free-access">Có thể truy cập tự do</option>
+    <option value="time-bound">Yêu cầu thời gian cụ thể</option>
+</select>
+<ul class="exam-list" id="examList">
+    <li class="exam-item free-access">Luyện tập</li>
+    <li class="exam-item free-access">Giữa kỳ</li>
+    <li class="exam-item time-bound">Cuối kỳ</li>
+    <li class="exam-item time-bound">Thi cuối kỳ</li>
+</ul>
+<script>
+    function searchExams() {
+        var input, filter, ul, li, txtValue;
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        ul = document.getElementById('examList');
+        li = ul.getElementsByTagName('li');
+        for (var i = 0; i < li.length; i++) {
+            txtValue = li[i].textContent || li[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = '';
+            } else {
+                li[i].style.display = 'none';
+            }
+        }
+    }
+
+    function filterExams() {
+        var select, option, ul, li, className;
+        select = document.getElementById('filterSelect');
+        option = select.options[select.selectedIndex].value;
+        ul = document.getElementById('examList');
+        li = ul.getElementsByTagName('li');
+        for (var i = 0; i < li.length; i++) {
+            className = li[i].className;
+            if (option == 'all' || className.includes(option)) {
+                li[i].style.display = '';
+            } else {
+                li[i].style.display = 'none';
+            }
+        }
+    }
+</script>
+</body>
+</html>
