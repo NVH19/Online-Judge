@@ -38,6 +38,22 @@ document.addEventListener('click', function(event) {
     }
 });
 
+var bell = document.getElementById('bell');
+var announcement = document.getElementById('announcement');
+bell.addEventListener('click',function(event){
+    if (announcement.style.display === 'none') {
+        announcement.style.display = 'block';
+    } else {
+        announcement.style.display = 'none';
+    }
+    event.stopPropagation();
+});
+document.addEventListener('click', function(event) {
+    var isClickInside = bell.contains(event.target);
+    if (!isClickInside) {
+        announcement.style.display = 'none';
+    }
+});
 // tìm kiếm theo trạng thái 
 function filterExams() {
     var selectedStatus = document.getElementById("filterSelect").value;
