@@ -35,6 +35,6 @@ loginButton.onclick = function() {
         // Nếu đủ thông tin, hiển thị thông báo đăng nhập thành công và chuyển trang
         alert("Đăng nhập thành công!");
         // Chuyển sang trang chính (điều này cần được thay đổi tùy thuộc vào ứng dụng của bạn)
-        window.location.href = "../home_page/home_page.html";
+        window.location.href = "../student_page/home_page.html";
     }
 };

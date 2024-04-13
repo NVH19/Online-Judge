@@ -1,0 +1,256 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: whitesmoke;
+    display: grid;
+    grid-template-rows: auto 1fr; /* Change top row to auto */
+    min-height: 100vh; /* Set min-height instead of height for better responsiveness */
+}
+
+.top {
+    background-color: rgb(226, 56, 56);
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 10px; /* Add padding */
+}
+
+.logo {
+    flex: 0 0 20%; /* Use flex-grow, flex-shrink, flex-basis shorthand */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text {
+    flex: 1; /* Take remaining space */
+    font-size: 30px; /* Adjust font size for smaller screens */
+    text-align: center;
+    color: white;
+    border-right: 1px solid #686767;
+}
+
+#bell {
+    font-size: 20px;
+    margin-top: 5px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.announcement {
+    width: 250px;
+    height: 350px;
+    border-radius: 10px;
+    background: rgb(214, 208, 196);
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 30px;
+    text-align: center;
+    display: none;
+    z-index: 1;
+}
+
+.person {
+    position: relative;
+    display: flex;
+    padding-right: 30px; /* Add padding */
+}
+
+.profile-info {
+    display: none;
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0; /* Align to the right */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+.person:hover .profile-info {
+    display: block;
+}
+.profile-info {
+    height: 78px;
+    width: 150px;
+    align-items: center;
+}
+.profile-info .acc{
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+
+/* Add media query for responsiveness */
+@media screen and (max-width: 768px) {
+    .text {
+        font-size: 20px; /* Decrease font size for smaller screens */
+    }
+
+    .search-bar {
+        margin-top: 20px;
+    }
+
+    .search-input {
+        width: 70%; /* Adjust width for smaller screens */
+    }
+
+    .quiz-card {
+        width: 90%; /* Adjust width for smaller screens */
+    }
+}
+
+.search{
+    border-radius: 10px;
+}
+.search-bar {
+    text-align: center;
+    margin-bottom: 50px; /* Decrease margin for smaller screens */
+    margin-top: 30px; /* Decrease margin for smaller screens */
+}
+
+.search-input {
+    width: 60%; /* Adjust width for smaller screens */
+    max-width: 420px; /* Set maximum width */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px; /* Rounded corners */
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-right: 10px;
+}
+
+.search-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 20px; /* Rounded corners */
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.search-button img {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.table{
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 16px;
+    box-sizing: border-box;
+    width: 70%;
+    margin: 0 auto;
+    padding: 20px 0px;
+    margin-bottom: 20px;
+}
+.quiz-card {
+    width: 90%; /* Adjust width for smaller screens */
+    max-width: 750px; /* Set maximum width */
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
+    transition: box-shadow 0.3s ease;
+    position: relative;
+}
+
+/* Hover effect */
+.quiz-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.left{
+    position: absolute;
+    height: 100%;
+    width: 10px;
+    background-color: green;
+}
+.quiz-card-header {
+    color: black;
+    padding: 5px;
+    position: relative;
+}
+.icon-clock{
+    position: absolute;
+    top: 23px;
+    right: 30px;
+    color: red;
+}
+
+.quiz-card-body {
+    color: #333;
+    font-family: "Nunito", sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+}
+
+
+h2{
+    margin: 0px;
+}
+.quiz-card h2 {
+    margin: 10px 0px 10px 15px;
+}
+
+/* Media query for responsiveness */
+@media screen and (max-width: 768px) {
+    .search-input {
+        width: 70%; /* Adjust width for smaller screens */
+        max-width: none; /* Remove max-width */
+    }
+
+    .search-button {
+        margin-left: 0; /* Remove left margin for smaller screens */
+    }
+
+    .quiz-card {
+        width: 90%; /* Adjust width for smaller screens */
+        max-width: none; /* Remove max-width */
+    }
+}
+.num-exam{
+    background-image: url('../image/num-exam.png');
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 20px;
+    margin-left: 20px;
+}
+.num-attemt{
+    background-image: url('../image/num-attempt.png');
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 20px;
+    margin-left: 20px;
+}
+.quiz-card-footer {
+    background-color: #fff;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between; /* Các phần tử con sẽ được căn cách xa nhau */
+    align-items: center;
+}
+.quanlity{
+    height: 5px;
+    width: 78%;
+    border-radius: 10px;
+    background-color: gray;
+    margin-left: 10px;
+}
+.quiz-card-footer a{
+    background-color: rgb(243, 252, 5);
+    box-shadow: 0px 0px 17px 2px rgba(232, 229, 229, 0.8);
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 20px;
+    width: 10%;
+    padding: 3px;
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý đề thi</title>
+  <style>
+    body {
+    font-family: Arial, sans-serif;
+    }
+
+    header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    }
+
+    header img {
+    height: 30px;
+    margin-right: 10px;
+    }
+
+    nav ul {
+    list-style-type: none;
+    padding: 0;
+    }
+
+    nav ul li {
+    display: inline;
+    margin-right: 20px;
+    }
+
+    .nav-menu {
+    background-color: #f2f2f2;
+    padding: 10px;
+    }
+
+    .content {
+    margin-top: 20px;
+    }
+
+    .content h2 {
+    margin-bottom: 10px;
+    }
+
+    #questionList div {
+    margin-bottom: 10px;
+    }
+
+    button {
+    padding: 8px 16px;
+    cursor: pointer;
+    }
+
+    button.edit {
+    margin-left: 10px;
+    }
+
+    button.delete {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    }
+
+    button.delete:hover {
+    background-color: #d32f2f;
+    }
+
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <header>
+    <a href="../admin_page/home_page.html"><img src="../image/logo_ptit.png" alt="Your Logo" /></a>
+    <i class="fas fa-user"></i>
+  </header>
+
+  <nav class="nav-menu">
+    <ul>
+      <li><a href="../admin_page/home_page.html" onclick="showManageExam()">Quản lý kỳ thi</a></li>
+      <li><a href="../qlsv/qlsv.html">Quản lý sinh viên</a></li>
+      <li><a href="../thongke/thongke.html" onclick="showStatistics()">Thống kê</a></li>
+      <li><a href="../showresult/show_result.html">Xem kết quả</a></li>
+    </ul>
+  </nav>
+
+  <div class="content" id="manageExamContent">
+    <h2>Thông tin kỳ thi</h2>
+    <form id="examForm">
+      <label for="examName">Tên kỳ thi:</label><br />
+      <input type="text" id="examName" name="examName" /><br />
+      <label for="examDescription">Chọn từ:</label><br />
+      <select id="examDescription" name="examDescription">
+        <!-- Thay đổi từ textarea thành select -->
+        <option value="D20">D20</option>
+        <option value="D21">D21</option>
+        <option value="D22">D22</option>
+        <option value="D23">D23</option>
+      </select><br />
+      <label for="examEndDate">Ngày kết thúc:</label><br />
+      <input type="date" id="examEndDate" name="examEndDate" /><br />
+
+      <h2>Danh sách câu hỏi</h2>
+      <div id="questionList">
+        <!-- Placeholder for question list -->
+      </div>
+      <button type="button" onclick="addQuestion()">Thêm câu hỏi</button>
+      <button type="button">Lưu kỳ thi</button>
+    </form>
+
+    <h2>Nhập đề thi từ file Excel</h2>
+    <input type="file" id="excelFileInput" />
+    <button onclick="importQuestionsFromExcel()">Nhập từ file Excel</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
