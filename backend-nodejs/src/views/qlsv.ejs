@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sinh viên</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            z-index: 1000;
+            background-color: #b92929;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: top 0.3s;
+        }
+
+        header img {
+            width: 40px;
+            height: auto;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        header i {
+            font-size: 20px;
+        }
+
+        .nav-menu {
+            background-color: #ddd;
+            width: 200px;
+            padding: 20px;
+            position: fixed;
+            top: 70px;
+            bottom: 0;
+            left: 0;
+            overflow-y: auto;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-menu ul li {
+            margin-bottom: 10px;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-menu ul li a {
+            text-decoration: none;
+            color: #ad171c;
+            display: block;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-menu ul li a:hover {
+            background-color: #ccc;
+        }
+
+        .content {
+            margin-top: 60px;
+            margin-left: 240px;
+            padding: 20px;
+        }
+
+        #searchInput {
+            padding: 8px 10px;
+            border: 1px solid #ff0000;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+            width: 300px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: auto;
+            font-size: 16px;
+            background-color: #bb3737;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #8b2a2a;
+        }
+
+        table {
+            display: none;
+            margin: 20px 5px;
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #8b2a2a;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .form-container {
+            display: none;
+            background-color: #f2f2f2;
+            padding: 20px;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+            width: 50%;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="number"] {
+            width: 100%;
+            height: 40px;
+            padding: 12px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-container input[type="submit"] {
+            padding: auto;
+            font-size: 16px;
+            background-color: #bb3737;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 30px;
+            margin-right: 10px;
+            margin-top: 20px;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: #8b2a2a;
+        }
+
+        .form-cancel-btn {
+            padding: auto;
+            font-size: 16px;
+            background-color: #bb3737;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .form-cancel-btn:hover {
+            background-color: #8b2a2a;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="adminPage"><img src="../image/logo_ptit.png" alt="Your Logo" /></a>
+        <i class="fas fa-user"></i>
+    </header>
+    <nav class="nav-menu">
+        <ul>
+            <li><a href="exam">Quản lý kỳ thi</a></li>
+            <li>
+                <a href="qlsv">Quản lý sinh viên</a>
+            </li>
+            <li><a href="exampleThongKe">Thống kê</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <h2>Danh sách sinh viên</h2>
+        <input type="text" id="searchInput" placeholder="Nhập mã sinh viên hoặc tên sinh viên...">
+        <button onclick="searchStudents()">Tìm kiếm</button>
+        <button onclick="showAddStudentForm()">Thêm sinh viên</button>
+        <!-- Form thêm sinh viên -->
+        <div class="form-container" id="addStudentForm">
+            <form id="studentForm">
+                <label for="MSV">Mã sinh viên:</label><br />
+                <input type="text" id="MSV" name="MSV" required /><br />
+
+                <label for="Ten">Họ tên:</label><br />
+                <input type="text" id="Ten" name="Ten" required /><br />
+
+                <label for="NgaySinh">Ngày sinh:</label><br />
+                <input type="text" id="NgaySinh" name="NgaySinh" required /><br />
+
+                <label for="Lop">Lớp:</label><br />
+                <input type="text" id="Lop" name="Lop" required /><br />
+
+                <label for="DiaChi">Địa chỉ:</label><br />
+                <input type="text" id="DiaChi" name="DiaChi" /><br />
+
+                <input type="submit" value="Thêm sinh viên" />
+                <button type="button" class="form-cancel-btn" onclick="hideAddStudentForm()">Hủy</button>
+            </form>
+        </div>
+
+        <div class="form-container" id="editStudentDiv">
+            <form id="editStudentForm">
+                <label for="MSV">Mã sinh viên:</label><br />
+                <input type="text" id="uMSV" name="MSV" required /><br />
+
+                <label for="Ten">Họ tên:</label><br />
+                <input type="text" id="uTen" name="Ten" required /><br />
+
+                <label for="NgaySinh">Ngày sinh:</label><br />
+                <input type="text" id="uNgaySinh" name="NgaySinh" required /><br />
+
+                <label for="Lop">Lớp:</label><br />
+                <input type="text" id="uLop" name="Lop" required /><br />
+
+                <label for="DiaChi">Địa chỉ:</label><br />
+                <input type="text" id="uDiaChi" name="DiaChi" /><br />
+
+                <input type="submit" value="Sửa" />
+                <button type="button" class="form-cancel-btn" onclick="hideEditStudentDiv()">Hủy</button>
+            </form>
+        </div>
+
+        <table id="searchTable">
+            <thead>
+                <tr>
+                    <th>Mã sinh viên</th>
+                    <th>Họ tên</th>
+                    <th>Ngày sinh</th>
+                    <th>Lớp</th>
+                    <th>Địa chỉ</th>
+                    <th>Xoá</th>
+                    <th>Sửa</th>
+                    <th>Xem điểm</th>
+                </tr>
+            </thead>
+            <tbody id="searchData">
+                <!-- Dữ liệu sẽ được thêm vào đây bằng JavaScript -->
+            </tbody>
+        </table>
+
+        <table id="examTable">
+            <thead>
+                <tr>
+                    <th>Mã sinh viên</th>
+                    <th>Tên kỳ thi</th>
+                    <th>Trạng thái</th>
+                    <th>Điểm số</th>
+                    <th>Thời gian</th>
+                    <th>Xem chi tiết</th>
+                </tr>
+            </thead>
+            <tbody id="examData">
+                <!-- Dữ liệu sẽ được thêm vào đây bằng JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        // var students = [
+        //     { MSV: 'B21DCCN111', Ten: "Nguyễn Văn Chiến", NgaySinh: "18/02/2003", Lop: "D21CQCN07-B", DiaChi: "Hà Nội"},
+        //     { MSV: 'B21DCCN131', Ten: "Trần Thị Chang", NgaySinh: "01/04/2003", Lop: "D21CQCN07-B", DiaChi: "Hà Nội"},
+        //     { MSV: 'B21DCCN241', Ten: "Phạm Văn Đông", NgaySinh: "11/08/2003", Lop: "D21CQCN07-B", DiaChi: "Hải Dương"},
+        //     { MSV: 'B21DCCN141', Ten: "Lê Thị Dung", NgaySinh: "13/02/2003", Lop: "D21CQCN07-B", DiaChi: "Hải Phòng"},
+        //     { MSV: 'B21DCCN145', Ten: "Hoàng Văn Quân", NgaySinh: "15/12/2003", Lop: "D21CQCN07-B", DiaChi: "Hà Nội"}
+        // ];
+
+        // var searchData = students;
+
+        // Hàm hiển thị dữ liệu kết quả thi trong bảng
+        function displayData(data) {
+
+            var searchTableBody = document.getElementById('searchData');
+            searchTableBody.innerHTML = '';
+            var searchTable = document.getElementById('searchTable');
+            searchTable.style.display = data.length > 0 ? 'table' : 'none';
+            // var examTable = document.getElementById('examTable');
+            // examTable.style.display = 'none';
+
+            if (data.length === 0) {
+                var noResultsRow = `<tr><td colspan="8">Không tìm thấy sinh viên nào phù hợp với điều kiện tìm kiếm.</td></tr>`;
+                searchTableBody.innerHTML = noResultsRow;
+            } else {
+                data.forEach(function (student) {
+                    var row = `
+                    <tr>
+                        <td>${student.MSV}</td>
+                        <td>${student.Ten}</td>
+                        <td>${student.NgaySinh}</td>
+                        <td>${student.Lop}</td>
+                        <td>${student.DiaChi}</td>
+                        <td><button onclick="deleteStudent('${student.MSV}')">Xoá</button></td>
+                        <td><button onclick="showEditStudentDiv('${student.MSV}')">Sửa</button></td>
+                        <td><button onclick="displayExamData('${student.MSV}')">Xem thêm</button></td>
+                    </tr>
+                `;
+                    searchTableBody.innerHTML += row;
+                });
+            }
+        }
+        function displaySearchData() {
+            fetch('http://localhost:8081/students')
+                .then(response => response.json())
+                .then(data => {
+                    displayData(data);
+                    console.log(data); // Dữ liệu từ cơ sở dữ liệu MySQL
+                })
+                .catch(error => {
+                    console.error('Lỗi khi gửi yêu cầu API:', error);
+                });
+        }
+        displaySearchData();
+
+        // Hàm tìm kiếm sinh viên
+        function searchStudents() {
+            var searchInput = document.getElementById('searchInput').value;
+            searchData = [];
+
+            if (searchInput === "") {
+                alert("Vui lòng nhập thông tin sinh viên cần tìm.");
+                return;
+            } else {
+                fetch('http://localhost:8081/searchStudents', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name: searchInput })
+                })
+                    .then(response => response.json())
+                    .then(students => {
+                        console.log(students);
+                        if (students === '') {
+                            alert('Không tìm thấy sinh viên nào phù hợp với điều kiện tìm kiếm.');
+
+                        }
+                        else {
+                            displayData(students);
+                        }
+                    })
+                    .catch(error => {
+                    });
+            }
+        }
+
+        var examData = [
+            { MSV: 'B21DCCN111', Ten: 'Thi giữa kỳ Lập trình web', score: 2.0, status: 'Hoàn thành', time: '2024-02-28 10:00', link: "../example/example.html" },
+            { MSV: 'B21DCCN131', Ten: 'Thi cuối kỳ Nhập môn công nghệ phần mềm', score: 7.5, status: 'Hoàn thành', time: '2024-02-28 11:00', link: "../example/example.html" },
+            { MSV: 'B21DCCN111', Ten: 'Thi thử Cơ sở dữ liệu phân tán', score: null, status: 'Chưa hoàn thành', time: '', link: "../example/example.html" },
+            { MSV: 'B21DCCN241', Ten: 'Thi thử Lập trình web', score: 8.5, status: 'Hoàn thành', time: '2024-02-28 09:00', link: "../example/example.html" },
+            { MSV: 'B21DCCN241', Ten: 'Thi giữa kỳ Nhập môn công nghệ phần mềm', score: 7.0, status: 'Hoàn thành', time: '2024-02-28 10:30', link: "../example/example.html" },
+            { MSV: 'B21DCCN241', Ten: 'Thi cuối kỳ Cơ sở dữ liệu phân tán', score: 9.5, status: 'Hoàn thành', time: '2024-02-28 13:00', link: "../example/example.html" },
+            { MSV: 'B21DCCN145', Ten: 'Thi giữa kỳ Lập trình web', score: null, status: 'Chưa hoàn thành', time: '', link: "" },
+            { MSV: 'B21DCCN141', Ten: 'Thi thử Nhập môn công nghệ phần mềm', score: null, status: 'Chưa hoàn thành', time: '', link: "" },
+            { MSV: 'B21DCCN145', Ten: 'Thi cuối kỳ Cơ sở dữ liệu phân tán', score: null, status: 'Chưa hoàn thành', time: '', link: "" },
+            { MSV: 'B21DCCN112', Ten: 'Thi thử Lịch sử Đảng', score: 6.0, status: 'Hoàn thành', time: '2024/05/04 20:00', link: "examResults" },
+            { MSV: 'B21DCCN001', Ten: 'Thi thử Lịch sử Đảng', score: 6.0, status: 'Hoàn thành', time: '2024/05/04 20:00', link: "examResults" },
+            { MSV: 'B21DCCN370', Ten: 'Thi thử Lịch sử Đảng', score: 6.0, status: 'Hoàn thành', time: '2024/05/04 20:00', link: "examResults" },
+            { MSV: 'B21DCCN600', Ten: 'Thi thử Lịch sử Đảng', score: 6.0, status: 'Hoàn thành', time: '2024/05/04 20:00', link: "examResults" }
+        ];
+
+        // Hàm hiển thị dữ liệu kết quả thi trong bảng
+        function displayExamData(MSV) {
+            var examTableBody = document.getElementById('examData');
+            examTableBody.innerHTML = '';
+
+            var examTable = document.getElementById('examTable');
+            examTable.style.display = examData.length > 0 ? 'table' : 'none';
+            examData.forEach(function (exam) {
+                if (exam.MSV === MSV) {
+                    var row = `
+                        <tr>
+                        <td>${exam.MSV}</td>
+                        <td>${exam.Ten}</td>
+                        <td>${exam.status}</td>
+                        <td>${exam.score}</td>
+                        <td>${exam.time}</td>
+                        <td><button onclick="window.location.href = 'examResults';">Xem</button></td>
+                        </tr>
+                    `;
+                    examTableBody.innerHTML += row;
+                }
+            });
+        }
+
+        // Hiển thị form thêm sinh viên
+        function showAddStudentForm() {
+            var form = document.getElementById("addStudentForm");
+            form.style.display = "block";
+        }
+
+        // Ẩn form thêm sinh viên
+        function hideAddStudentForm() {
+            var form = document.getElementById("addStudentForm");
+            form.style.display = "none";
+        }
+
+        // Thêm sinh viên
+        document
+            .getElementById("studentForm")
+            .addEventListener("submit", function (event) {
+                event.preventDefault(); // Ngăn chặn form submit mặc định
+
+                var MSV = document.getElementById("MSV").value;
+                var Ten = document.getElementById("Ten").value;
+                var NgaySinh = document.getElementById("NgaySinh").value;
+                var Lop = document.getElementById("Lop").value;
+                var DiaChi = document.getElementById("DiaChi").value;
+                fetch('http://localhost:8081/addStudent', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        MSV: MSV,
+                        Ten: Ten,
+                        NgaySinh: NgaySinh,
+                        Lop: Lop,
+                        DiaChi: DiaChi
+                    })
+                })
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.status != 200) {
+                            alert(data.message);
+                        } else {
+                            alert("Thêm sinh viên thành công!");
+                            displaySearchData();
+                            hideAddStudentForm();
+                        }
+                    })
+                    .catch(error => {
+
+                    });
+                // students.push(newStudent);
+                // searchData = students;
+                // displaySearchData();
+                // hideAddStudentForm();
+            });
+
+        // Xóa sinh viên
+        function deleteStudent(MSV) {
+            fetch(`http://localhost:8081/deleteStudent/${MSV}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Lỗi khi xóa sinh viên');
+                    }
+                    displaySearchData();
+                    return response.json();
+                })
+                .then(result => {
+                    console.log(result.message); // In ra thông báo từ máy chủ 
+                })
+                .catch(error => {
+                    console.error('Lỗi khi gửi yêu cầu DELETE:', error);
+                });
+        }
+
+        // Hiển thị form sửa sinh viên
+        function showEditStudentDiv(MSV) {
+            var div = document.getElementById("editStudentDiv");
+            div.style.display = "block";
+            var form = document.getElementById("editStudentForm");
+
+            fetch('http://localhost:8081/searchStudents', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: MSV })
+            })
+                .then(response => response.json())
+                .then(students => {
+                    console.log(students);
+                    form.querySelector("#uMSV").value = students[0].MSV;
+                    form.querySelector("#uTen").value = students[0].Ten;
+                    form.querySelector("#uNgaySinh").value = students[0].NgaySinh;
+                    form.querySelector("#uLop").value = students[0].Lop;
+                    form.querySelector("#uDiaChi").value = students[0].DiaChi;
+                    form.querySelector("#uMSV").readOnly = true;
+                })
+                .catch(error => {
+                });
+        }
+
+        // Ẩn form sửa sinh viên
+        function hideEditStudentDiv() {
+            var div = document.getElementById("editStudentDiv");
+            div.style.display = "none";
+        }
+
+        // Sửa sinh viên
+        document
+            .getElementById("editStudentForm")
+            .addEventListener("submit", function (event) {
+                event.preventDefault(); // Ngăn chặn form submit mặc định
+
+                var MSV = document.getElementById("uMSV").value;
+                var Ten = document.getElementById("uTen").value;
+                var NgaySinh = document.getElementById("uNgaySinh").value;
+                var Lop = document.getElementById("uLop").value;
+                var DiaChi = document.getElementById("uDiaChi").value;
+
+                fetch(`http://localhost:8081/updateStudent/${MSV}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        MSV: MSV,
+                        Ten: Ten,
+                        NgaySinh: NgaySinh,
+                        Lop: Lop,
+                        DiaChi: DiaChi
+                    })
+                })
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.status != 200) {
+                            alert(data.message);
+                        } else {
+                            alert("Sửa sinh viên thành công!");
+                            displaySearchData();
+                            hideEditStudentDiv();
+                        }
+                    })
+                    .catch(error => {
+
+                    });
+                // students.push(newStudent);
+                // searchData = students;
+                // displaySearchData();
+                // hideAddStudentForm();
+            });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống thi trắc nghiệm ptit</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #main {
+            display: flex;
+            height: 100vh; /* Sử dụng chiều cao của toàn bộ màn hình */
+        }
+        .left{
+            width: 30%;
+            height: 100%;
+        }
+        .right{
+            width: 70%;
+            height: 100%;
+            background-image: url('../image/home.jpg');
+            background-size: cover;
+        }
+        .logo{
+            width: 100%;
+            height: 35%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .text{
+            padding-bottom: 20px;
+        }
+        .form{
+            width: 90%;
+            margin: 0 auto;
+            text-align: center;
+            background-color: white;
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.15);
+            border-radius: 16px;
+            box-sizing: border-box;
+        }
+        .button_top{
+            margin-bottom: 10px;
+            padding: 20px 0px 0px 0px;
+        }
+        .button_bottom{
+            margin-bottom: 20px;
+            padding: 10px 0px 20px 0px;
+        }
+        .sign_in{
+            display: inline-block;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            width: 80%;
+            border-radius: 16px;
+            background-color: red;
+            padding: 6px 0px 6px 0px;
+        }
+        a{
+            text-decoration: none;
+        }
+        .position{
+            margin: 48px 0px 24px;
+            text-align: center;
+        }
+        .name{
+            margin-bottom: 5px;
+        }
+        .language{
+            padding-top: 5px;
+            text-align: center;
+        }
+        .language_text{
+            color: #565656;
+            margin: 10px 0px 10px 15px;
+        }
+        .img{
+            height: 23.2px; 
+            width: 27.5px; 
+            vertical-align: middle;
+        }
+        a:hover p{
+            color: rgb(32, 29, 29);
+            font-weight: inherit; /* Chữ in đậm khi rê chuột vào */
+        }
+        p{
+            color: rgba(0, 0, 0, .45);
+        }
+    </style> 
+    <link rel="icon" href="../image/logo_ptit.png" type="image/x-icon">
+</head>
+<body>
+    <div id="main">
+        <div class="left">
+            <div class="logo">
+                <a href="../home/home.html">
+                    <img src="../image/logo_ptit.png" alt="logo_ptit">
+                </a>
+            </div>
+            <div class="text">
+                <h3 style="text-align: center;">Bạn đăng nhập với tư cách là?</h3>
+            </div>
+            <div class="form">
+                <div class="button_top">
+                    <a class="sign_in" href="sinhVien_log">Sinh Viên</a>
+                </div>
+                <p>or</p>
+                <div class="button_bottom">
+                    <a class="sign_in" href="giangVien_log">Giảng Viên</a>
+                </div>
+            </div>
+            <div class="contact">
+                <div class="language">
+                    <a class="language_text" href="">Tiếng Việt <img class="img" src="../image/icon_vn.jpg" alt="icon_vn"></a>  
+                    <a class="language_text" href="">English <img class="img" src="../image/icon_eng.jpg" alt="icon_eng"></a>
+                </div>
+                <div class="position">
+                    <div class="name">
+                        <a href="https://portal.ptit.edu.vn/" target="_blank" title="Phòng giáo vụ ptit"><p>Học viện Công nghệ Bưu chính Viễn thông</p></a>
+                    </div>
+                    <div class="code">
+                        <p>Copyright © 2024 Developed by H19</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right"></div>
+    </div>
+</body>
+</html>

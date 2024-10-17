@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+</head>
+
+<body>
+    <div id="questions-container"></div>
+
+    <script>
+        var data = [
+            {
+                "questionCount": 1,
+                "questionText": "Đường lối công nghiệp hoá đất nước đã được hình thành từ đại hội nào của Đảng ta?",
+                "answerA": "Đại hội III (9/1960). Chính thức tại Đại hội VIII (6/1996)",
+                "answerB": "Đại hội IV.",
+                "answerC": "Đại hội V.",
+                "answerD": "Đai hội VI.",
+                "correctAnswer": "A"
+            },
+            {
+                "questionCount": 2,
+                "questionText": "Từ 1975 đến 1985 nước ta tiến hành công nghiệp hóa?",
+                "answerA": "Miền Bắc.",
+                "answerB": "Miền Nam.",
+                "answerC": "Miền Trung",
+                "answerD": "Trên phạm vi cả nước",
+                "correctAnswer": "D"
+            },
+            {
+                "questionCount": 3,
+                "questionText": "Chương trình mục tiêu của công nghiệp hoá xã hội chủ nghĩa trong những năm còn lại của chặng đường đầu tiên của thời kỳ quá độ được Đại Hội VI xác định là:",
+                "answerA": " Lương thực - thực phẩm.",
+                "answerB": "Hàng tiêu dùng; lương thực thưc phẩm.",
+                "answerC": "Hàng xuất khẩu.",
+                "answerD": "Lương thực, thực pẩm; hàng tiêu dùng và hàng xuất khẩu",
+                "correctAnswer": "D"
+            },
+            {
+                "questionCount": 4,
+                "questionText": "Yếu tố quyết định tăng trưởng kinh tế là?",
+                "answerA": "Vốn.",
+                "answerB": "Thể chế chính trị.",
+                "answerC": "Khoa học và công nghệ.",
+                "answerD": "Con người",
+                "correctAnswer": "D"
+            },
+            {
+                "questionCount": 5,
+                "questionText": "Trong quá trình công nghiệp hoá hiện đại hoá nền kinh tế nào được coi là yếu tố quan trọng ?",
+                "answerA": "Kinh tế nông nghiệp",
+                "answerB": "Nền kinh tế công nghiệp",
+                "answerC": "Nền kinh tế tri thức",
+                "answerD": "Nền kinh tế công - nông nghiệp kết hợp",
+                "correctAnswer": "C"
+            },
+            {
+                "questionCount": 6,
+                "questionText": "Nguyễn Ái Quốc lựa chọn con đường giải phóng dân tộc theo khuynh hướng chính trị vô sản vào thời gian nào?",
+                "answerA": "1917",
+                "answerB": "1918",
+                "answerC": "1919",
+                "answerD": "1920",
+                "correctAnswer": "D"
+            },
+            {
+                "questionCount": 7,
+                "questionText": "Phong trào trả tự do cho cụ Phan Bội Châu diễn ra sôi nổi vào năm nào?",
+                "answerA": "1924",
+                "answerB": "1925",
+                "answerC": "1926",
+                "answerD": "1927",
+                "correctAnswer": "B"
+            },
+            {
+                "questionCount": 8,
+                "questionText": "Việt Nam Quốc dân Đảng được thành lập vào khoảng thời gian nào?",
+                "answerA": "Dec-27",
+                "answerB": "Nov-26",
+                "answerC": "Aug-25",
+                "answerD": "Jul-25",
+                "correctAnswer": "A"
+            },
+            {
+                "questionCount": 9,
+                "questionText": "Tổ chức cộng sản nào ra đời đầu tiên tại Việt Nam?",
+                "answerA": "Hội Việt Nam cách mạng thanh niên",
+                "answerB": "Đông Dương cộng sản Đảng",
+                "answerC": "An Nam cộng sản Đảng",
+                "answerD": "Đông Dương cộng sản liên đoàn",
+                "correctAnswer": "B"
+            },
+            {
+                "questionCount": 10,
+                "questionText": " Ai là người đã tham gia sáng lập Việt Nam Quốc dân Đảng 1927?",
+                "answerA": "Tôn Quang Phiệt",
+                "answerB": "Trần Huy Liệu",
+                "answerC": "Phạm Tuấn Tài",
+                "answerD": "Nguyễn Thái Học",
+                "correctAnswer": "C"
+            }
+        ]
+        document.addEventListener('DOMContentLoaded', function () {
+            const nameExam = 'Thi thử Lịch sử Đảng';
+            renderQuestions(data);
+
+            function renderQuestions(questions) {
+                var questionsContainer = document.getElementById('questions-container');
+
+                questions.forEach(function (question) {
+                    var questionElement = document.createElement('div');
+                    questionElement.classList.add('question');
+
+                    var questionTextElement = document.createElement('p');
+                    questionTextElement.textContent = 'Câu ' + question.questionCount + ': ' + question.questionText;
+                    questionElement.appendChild(questionTextElement);
+
+                    var answersElement = document.createElement('ul');
+                    ['A', 'B', 'C', 'D'].forEach(function (option) {
+                        var answerItem = document.createElement('li');
+                        answerItem.textContent = option + ': ' + question['answer' + option];
+                        if (question.correctAnswer === option) {
+                            answerItem.classList.add('correct-answer');
+                        }
+                        answersElement.appendChild(answerItem);
+                    });
+                    questionElement.appendChild(answersElement);
+
+                    questionsContainer.appendChild(questionElement);
+                });
+            }
+        });
+    </script>
+
+    <style>
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question p {
+            font-weight: bold;
+        }
+
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+
+        /* Phần tử chứa các câu hỏi */
+        #quiz {
+            margin-top: 20px;
+        }
+
+        /* Phần tử chứa mỗi câu hỏi */
+        .question {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Phần tử chứa nội dung của mỗi câu hỏi */
+        .question p {
+            font-weight: bold;
+        }
+
+        /* Phần tử chứa lựa chọn (radio hoặc checkbox) */
+        .choices {
+            margin-top: 10px;
+        }
+
+        /* Phần tử label của lựa chọn */
+        .choices label {
+            display: block;
+        }
+
+        /* Phần tử input của lựa chọn */
+        .choices input {
+            margin-right: 5px;
+        }
+    </style>
+</body>
+
+</html>

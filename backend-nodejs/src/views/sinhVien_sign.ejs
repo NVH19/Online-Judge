@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng kí</title>
+    <style>
+        body {
+            background-color: whitesmoke;
+        }
+
+        h3 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bor {
+            width: 350px;
+            height: 540px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-40%, -50%);
+            box-shadow: 0px 0px 17px 2px rgba(141, 131, 131, 0.8);
+            border-radius: 10px;
+        }
+
+        .form {
+            padding-left: 60px;
+        }
+
+        input {
+            border: solid 1.6px #d8dee2;
+            background-color: #fafbfc;
+            border-radius: 4px;
+            padding-left: 15.36px;
+        }
+
+        .login {
+            height: 30px;
+            width: 200px;
+            padding-top: 3px;
+        }
+
+        .img {
+            width: 100%;
+            height: 85px;
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        .log {
+            margin-top: 10px;
+        }
+
+        .log button {
+            margin-top: 17px;
+            height: 40px;
+            width: 220px;
+            color: white;
+            background-color: red;
+            border-radius: 5px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            font-style: italic;
+            display: inline-block;
+        }
+    </style>
+    <link rel="icon" href="../image/logo_ptit.png" type="image/x-icon">
+</head>
+
+<body>
+    <div class="bor">
+        <div class="img">
+            <img src="../image/logo_ptit.png" alt="logo" style="width: 55px; height: 70px;">
+        </div>
+        <h3>Đăng Kí</h3>
+        <div class="form">
+            <form id="registerForm">
+                <label for="maSV">Tên người dùng</label><br>
+                <input type="text" class="login" id="username" name="username" placeholder="Vd: B21DCCN001"><br>
+                <div id="username-error" class="error-message"></div>
+                <br>
+                <label for="maSV">Email</label><br>
+                <input type="email" class="login" id="email" name="email" placeholder="Vd: 123@gmail.com"><br>
+                <div id="email-error" class="error-message"></div>
+                <br>
+                <label for="class">Mật khẩu</label><br>
+                <input type="password" class="login" id="password" name="password" placeholder="Vd: 12345678"><br>
+                <div id="password-error" class="error-message"></div>
+                <br>
+                <label for="class">Xác nhận mật khẩu</label><br>
+                <input type="password" class="login" id="confirm-password" name="confirmPassword"
+                    placeholder="Vd: 12345678">
+                <div id="confirm-password-error" class="error-message"></div>
+                <div class="log">
+                    <button id="sign_upButton" type="submit" value="Đăng Kí">Đăng Kí</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        var usernameInput = document.getElementById("username");
+        var emailInput = document.getElementById("email");
+        var passwordInput = document.getElementById("password");
+        var confirmPasswordInput = document.getElementById("confirm-password");
+        var sub = document.getElementById("sign_upButton");
+
+        var usernameError = document.getElementById("username-error");
+        var emailError = document.getElementById("email-error");
+        var passwordError = document.getElementById("password-error");
+        var confirmPasswordError = document.getElementById("confirm-password-error");
+
+        var usernameValid = false;
+        var passwordValid = false;
+        var emailValid = false;
+        var confirmPasswordValid = false;
+        // Kiểm tra tính hợp lệ của username
+        usernameInput.addEventListener("blur", function () {
+            if (usernameInput.value === "") {
+                usernameValid = false;
+                usernameError.textContent = "Vui lòng nhập tài khoản!";
+            } else {
+                usernameValid = true;
+                usernameError.textContent = "";
+            }
+        });
+
+        // Kiểm tra tính hợp lệ của email
+        emailInput.addEventListener("blur", function () {
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailInput.value === "") {
+                emailValid = false;
+                emailError.textContent = "Vui lòng nhập email!"
+            }
+            else if (!emailPattern.test(emailInput.value)) {
+
+                emailError.textContent = "Vui lòng nhập đúng định dạng email!";
+            } else {
+                emailValid = true;
+                emailError.textContent = "";
+            }
+        });
+
+        // Kiểm tra tính hợp lệ của password
+        passwordInput.addEventListener("blur", function () {
+            if (passwordInput.value === "") {
+                passwordValid = false;
+                passwordError.textContent = "Vui lòng nhập mật khẩu!";
+            } else if (passwordInput.value.length < 8) {
+                passwordError.textContent = "Mật khẩu phải có ít nhất 8 kí tự";
+            } else {
+                passwordValid = true;
+                passwordError.textContent = "";
+            }
+        });
+
+        // Kiểm tra tính hợp lệ của confirm-password
+        confirmPasswordInput.addEventListener("blur", function () {
+            if (confirmPasswordInput.value === "") {
+                confirmPasswordValid = false;
+                confirmPasswordError.textContent = "Vui lòng xác nhận mật khẩu!";
+            } else if (confirmPasswordInput.value !== passwordInput.value) {
+                confirmPasswordError.textContent = "Mật khẩu không khớp!";
+            } else {
+                confirmPasswordValid = true;
+                confirmPasswordError.textContent = "";
+            }
+        });
+
+
+
+        document.getElementById("registerForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+            console.log(username, email, password, confirmPassword);
+            // Gửi yêu cầu POST đến API
+            if(!usernameValid || !passwordValid || !emailValid || !confirmPasswordValid){
+                
+                alert('Vui lòng điền đầy đủ thông tin');
+            }
+            else{
+
+                fetch('http://localhost:8081/addUser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: username, email: email, password: password, confirmPassword: confirmPassword })
+                })
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.status != 200) {
+                            alert(data.message);
+                        } else {
+                            alert("Đăng kí thành công!");
+                            window.location.href = 'sinhVien_log';
+                        }
+                    })
+                    .catch(error => {
+                    
+                    });
+            }
+        });
+    </script>
+</body>
+
+</html>

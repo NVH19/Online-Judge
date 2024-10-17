@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả bài thi</title>
+    <style>
+        #header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(to right, #b92929, #fa6d6d);
+            color: #fff;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s;
+            z-index: 1000;
+            height: 40px;
+            display: flex;
+            justify-self: center;
+        }
+
+        #header h1 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-left: 45%;
+        }
+
+        #header:hover {
+            background: linear-gradient(to right, #fa6d6d, #b92929);
+        }
+
+        #logo_header {
+            width: 40px;
+            max-height: 100%;
+            margin-right: 10px;
+            background-color: #f9f9f9;
+            border-radius: 35%;
+            margin-left: 30px;
+        }
+
+        #logo_header img {
+            display: block;
+            max-width: 50px;
+            max-height: 45px;
+            height: auto;
+            border-radius: 5%;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .content {
+            top: 100px;
+            width: 70%;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+            padding-top: 100px;
+        }
+
+        #result-summary {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-detail {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .correct-answer {
+            color: green;
+        }
+
+        .wrong-answer {
+            color: red;
+        }
+
+        .check-mark::before {
+            content: '\2714';
+            /* Dấu tích */
+            margin-right: 5px;
+        }
+
+        .cross-mark::before {
+            content: '\2718';
+            /* Dấu x */
+            margin-right: 5px;
+        }
+
+        @media print {
+            .print-button {
+                display: none;
+            }
+        }
+
+        #print-button {
+            margin-left: 35%;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #bb3737;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #b57575;
+        }
+
+        @media print {
+            .header {
+                align-self: center;
+                background-color: #bb3737;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header">
+        <div id="logo_header">
+            <a href="/homepage"><img src="../image/logo_ptit.png" alt="logo_ptit"></a>
+        </div>
+        <h1>Kết quả</h1>
+        <button class="button" onclick="printReport()" id="print-button">In</button>
+    </div>
+    <div class="content">
+        <div id="result-summary">
+            <p id="total-questions"></p>
+            <p id="correct-answers"></p>
+            <p id="score"></p>
+        </div>
+        <div id="answers-detail">
+            <!-- Chi tiết câu trả lời sẽ được hiển thị ở đây -->
+        </div>
+    </div>
+    <script>
+        // Lấy dữ liệu từ local storage (truyền từ trang trước)
+        var totalQuestions = localStorage.getItem('totalQuestions');
+        var correctAnswers = localStorage.getItem('correctAnswers');
+        var score = localStorage.getItem('score');
+        var answersDetail = JSON.parse(localStorage.getItem('answersDetail'));
+        console.log(answersDetail);
+
+        // Hiển thị dữ liệu trên trang kết quả
+        document.getElementById('total-questions').textContent = "Tổng số câu: " + totalQuestions;
+        document.getElementById('correct-answers').textContent = "Số câu trả lời đúng: " + correctAnswers;
+        document.getElementById('score').textContent = "Điểm số: " + score;
+
+        // Hiển thị chi tiết câu trả lời
+        var answersDetailDiv = document.getElementById('answers-detail');
+        answersDetail.forEach(function (answer, index) {
+            var questionDiv = document.createElement('div');
+            questionDiv.classList.add('question-detail');
+            questionDiv.innerHTML = '<p>' + 'Câu ' + answer.count + ': '  + answer.question + '</p>';
+            questionDiv.innerHTML += '<div class="choices">' +
+                '<label>' + 'A. ' + answer.ansA + '<br>' + '</label>' +
+                '<label>' + 'B. ' + answer.ansB + '<br>' + '</label>' +
+                '<label>' + 'C. ' + answer.ansC + '<br>' + '</label>' +
+                '<label>' + 'D. ' + answer.ansD + '<br>' + '</label>' +
+                '</div>';
+            // Tạo một span để chứa nội dung của câu trả lời
+            var answerSpan = document.createElement('span');
+
+            // Kiểm tra xem câu trả lời có đúng hay không và thêm class và dấu tích/x tương ứng
+            if (answer.userAnswer.length === 1 && answer.userAnswer[0] === answer.correctAnswer) {
+                answerSpan.textContent = 'Câu trả lời của bạn: ' + answer.userAnswer;
+                answerSpan.classList.add('correct-answer');
+                answerSpan.classList.add('check-mark');
+            } else {
+                answerSpan.textContent = 'Câu trả lời của bạn: ' + answer.userAnswer;
+                answerSpan.classList.add('wrong-answer');
+                answerSpan.classList.add('cross-mark');
+            }
+
+            // Thêm span vào div của câu hỏi
+            questionDiv.appendChild(answerSpan);
+
+            // Hiển thị đáp án đúng
+            questionDiv.innerHTML += '<p>Đáp án đúng: ' + answer.correctAnswer + '</p>';
+            answersDetailDiv.appendChild(questionDiv);
+        });
+
+
+
+        function printReport() {
+            // Chọn phần nội dung bạn muốn in
+            var reportContent = document.getElementById('content');
+
+            // In bản in
+            window.print();
+        }
+    </script>
+</body>
+
+</html>

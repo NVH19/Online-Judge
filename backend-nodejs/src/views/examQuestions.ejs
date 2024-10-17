@@ -1,0 +1,354 @@
+`
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề thi</title>
+    <!-- <link rel="stylesheet" href="exam.css"> -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .quiz-container {
+            width: 70%;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .question p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .choices label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: hsl(211, 97%, 49%);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #065ab3;
+        }
+
+        #header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(to right, #b92929, #fa6d6d);
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s;
+            z-index: 1000;
+            height: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 5%;
+        }
+
+        #header:hover {
+            background: linear-gradient(to right, #fa6d6d, #b92929);
+        }
+
+        .content {
+            margin-top: 100px;
+        }
+
+
+        #logo_header {
+            width: 40px;
+            height: 100%;
+            max-height: 100%;
+            margin-right: 10px;
+            background-color: #f9f9f9;
+            border-radius: 35%;
+            margin-left: 30px;
+        }
+
+        #logo_header img {
+            display: block;
+            max-width: 50px;
+            max-height: 45px;
+            height: auto;
+            border-radius: 5%;
+        }
+
+        #timer {
+            margin-top: 13px;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header">
+        <a href="/homePage" id="logo_header">
+            <img src="../image/logo_ptit.png" alt="logo_ptit">
+        </a>
+        <h1>Bài thi trắc nghiệm</h1>
+        <div id="timer" class="timer"></div>
+    </div>
+    <div class="content">
+        <div id="quiz" class="quiz-container"></div>
+        <br>
+        <button onclick="submitQuiz()">Nộp bài</button>
+    </div>
+    <script>
+        // var questions = [
+        //     {
+        //         question: "Câu 1: Mặt trăng có ánh sáng tự nhiên.",
+        //         answer: "Đúng",
+        //         type: "true-false"
+        //     },
+        //     {
+        //         question: "Câu 2: Đại dương Thái Bình Dương nằm ở phía đông của châu Á.",
+        //         answer: "Đúng",
+        //         type: "true-false"
+        //     },
+        //     {
+        //         question: "Câu 3: Con người có 5 ngón tay ở mỗi tay.",
+        //         answer: "Đúng",
+        //         type: "true-false"
+        //     },
+        //     {
+        //         question: "Câu 4: Tác phẩm 'Mona Lisa' được vẽ bởi nghệ sĩ nào?",
+        //         choices: ["Leonardo da Vinci", "Pablo Picasso", "Vincent van Gogh", "Michelangelo"],
+        //         answer: "Leonardo da Vinci",
+        //         type: "multiple-choice"
+        //     },
+        //     {
+        //         question: "Câu 5: Câu nào sau đây là câu hỏi có 4 đáp án?",
+        //         choices: ["Câu 1", "Câu 2", "Câu 3", "Câu 4"],
+        //         answer: "Câu 1",
+        //         type: "multiple-choice"
+        //     },
+        //     {
+        //         question: "Câu 6: Trong hệ Mặt trời, hành tinh nào gần mặt trời nhất?",
+        //         choices: ["Mars", "Venus", "Mercury", "Earth"],
+        //         answer: "Mercury",
+        //         type: "multiple-choice"
+        //     },
+        //     {
+        //         question: "Câu 7: Những nguyên tố sau đây thuộc nhóm kim loại:",
+        //         choices: ["Sắt", "Oxy", "Nhôm", "Crom"],
+        //         answer: "Sắt",
+        //         type: "multiple-choice"
+        //     },
+        //     {
+        //         question: "Câu 8: Các loại môi trường sau đây ảnh hưởng đến sự sống của loài cá:",
+        //         choices: ["Nước lạnh", "Nước ô nhiễm", "Nước có nhiều oxy", "Nước có nhiều muối"],
+        //         answer: "Nước lạnh",
+        //         type: "multiple-choice"
+        //     },
+        //     {
+        //         question: "Câu 9: Các hành động sau đây giúp bảo vệ môi trường:",
+        //         choices: ["Tái chế", "Sử dụng túi nylon một lần", "Sử dụng nhiên liệu hóa thạch nhiều hơn"],
+        //         answer: "Tái chế",
+        //         type: "multiple-choice"
+        //     },
+        //     {
+        //         question: "Câu 10: Các mục đích của việc sử dụng máy tính bao gồm:",
+        //         choices: ["Chơi game", "Ghi chép", "Học tập", "Nấu ăn"],
+        //         answer: "Học tập",
+        //         type: "multiple-choice"
+        //     }
+        // ];
+
+        var quizContainer = document.getElementById('quiz');
+        const url = window.location.href;
+        const parts = url.split("/");
+        const examName = parts[parts.length - 1];
+        console.log(examName); // In ra "test"
+
+        // hàm tạo câu hỏi
+        var minutes;
+        async function displayQuestions() {
+            fetch(`http://localhost:8081/examPaper/${examName}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Xử lý dữ liệu ở đây, ví dụ: tạo các thẻ câu hỏi từ dữ liệu
+                    var exam = data.data;
+                    console.log(exam);
+                    var examId;
+                    // Dữ liệu từ cơ sở dữ liệu MySQL
+                    exam.forEach(function (question, index) {
+                        var questionDiv = document.createElement('div');
+                        examId = question.examId;
+                        questionDiv.classList.add('question');
+                        questionDiv.innerHTML = '<p>'+ 'Câu ' + question.questionCount + ': ' + question.questionText + '</p>';
+                        questionDiv.innerHTML += '<div class="choices">' +
+                            '<label><input type="radio" name="q' + index + '" value="A"> ' + 'A. ' + question.answerA + '</label>' +
+                            '<label><input type="radio" name="q' + index + '" value="B"> ' + 'B. ' + question.answerB + '</label>' +
+                            '<label><input type="radio" name="q' + index + '" value="C"> ' + 'C. ' + question.answerC + '</label>' +
+                            '<label><input type="radio" name="q' + index + '" value="D"> ' + 'D. ' + question.answerD + '</label>' +
+                            '</div>';
+                        document.getElementById('quiz').appendChild(questionDiv);
+                    });
+                    fetch("http://localhost:8081/getExam")
+                        .then(response => response.json())
+                        .then(data => {
+                            // Xử lý dữ liệu ở đây, ví dụ: tạo các thẻ câu hỏi từ dữ liệu
+                            var exams = data;
+                            console.log(exams);
+                            // Dữ liệu từ cơ sở dữ liệu MySQL
+                            for (const exam of exams) {
+                                // Nếu tên đề thi khớp, trả về duration của đề đó
+                                // console.log("id: " + exam.id);
+                                // console.log("examId: " + examId);
+                                // console.log("exam:" + exam.duration);
+                                if (exam.id == examId) {
+                                    minutes = exam.duration.split(" ");
+                                    minutes = parseInt(minutes[0]);
+                                }
+                            }
+                            console.log(minutes);
+                            var seconds = 0;
+                            var timerElement = document.getElementById('timer');
+
+                            function updateTimer() {
+                                if (seconds === 0) {
+                                    if (minutes === 0) {
+                                        clearInterval(timerInterval);
+                                        timerElement.textContent = "Hết thời gian";
+                                        submitQuiz();
+                                        return;
+                                    } else {
+                                        minutes--;
+                                        seconds = 59;
+                                    }
+                                } else {
+                                    seconds--;
+                                }
+
+                                timerElement.textContent = "Thời gian còn lại: " + minutes.toString().padStart(2, '0') + ":" + seconds.toString().padStart(2, '0');
+                            }
+
+                            var timerInterval = setInterval(updateTimer, 1000);
+                        })
+                        .catch(error => {
+                            console.error('Lỗi khi gửi yêu cầu API:', error);
+                        });
+                        
+                })
+                .catch(error => {
+                    console.error('Lỗi khi gửi yêu cầu API:', error);
+                });
+        }
+
+        displayQuestions();
+
+        function submitQuiz() {
+                // Tính số câu trả lời đúng và điểm số
+                var confirmation = confirm("Bạn có chắc chắn muốn nộp bài?");
+                if (confirmation) {
+                    var correctAnswers = 0;
+                    var answersDetail = [];
+                    // Lấy tên đề thi từ URL
+                    var url = window.location.href;
+                    var parts = url.split("/");
+                    var examName = parts[parts.length - 1];
+
+                    // Fetch dữ liệu đề thi từ API
+                    fetch(`http://localhost:8081/examPaper/${examName}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            // Xử lý dữ liệu đề thi
+                            var exam = data.data;
+                            console.log(exam);
+
+                            // Lặp qua từng câu hỏi trong đề thi
+                            exam.forEach(function (question, index) {
+                                var userAnswer;
+                                var correctAnswer = question.correctAnswer;
+
+                                // Lấy câu trả lời của người dùng
+                                var selectedOptions = document.querySelectorAll('input[name="q' + index + '"]:checked');
+                                console.log("sel: " + selectedOptions)
+                                userAnswer = [];
+                                selectedOptions.forEach(function (option) {
+                                    userAnswer.push(option.value);
+                                });
+                                // console.log(userAnswer);
+
+                                // Kiểm tra câu trả lời có chính xác không
+                                // Kiểm tra câu trả lời có chính xác không
+                                var correctAnswerArray = correctAnswer.split(','); // Chuyển chuỗi thành mảng
+                                var isCorrect = userAnswer.sort().toString() === correctAnswerArray.sort().toString();
+
+                                if (isCorrect) {
+                                    correctAnswers++;
+                                }
+
+                                // Lưu chi tiết câu trả lời
+                                answersDetail.push({
+                                    question: question.questionText,
+                                    count: question.questionCount,
+                                    ansA: question.answerA,
+                                    ansB: question.answerB,
+                                    ansC: question.answerC,
+                                    ansD: question.answerD,
+                                    userAnswer: userAnswer.length ? userAnswer : "Chưa trả lời", // Kiểm tra xem người dùng đã chọn câu trả lời chưa
+                                    correctAnswer: correctAnswer
+                                });
+                            });
+
+                            // Tính điểm số
+                            var score = (correctAnswers / exam.length * 10).toFixed(2);
+
+                            // Lưu dữ liệu vào localStorage
+                            localStorage.setItem('totalQuestions', exam.length);
+                            localStorage.setItem('correctAnswers', correctAnswers);
+                            localStorage.setItem('score', score);
+                            localStorage.setItem('answersDetail', JSON.stringify(answersDetail));
+                            console.log('total: ' + exam.length + '\n' + "score: " + score);
+                            console.log('ans: ' + JSON.stringify(answersDetail))
+                            alert("Bạn đã hoàn thành bài thi. Cảm ơn bạn đã tham gia!");
+
+                            // Chuyển hướng sang trang kết quả
+                            window.location.href = "/examResults";
+                        })
+                        .catch(error => {
+                            console.error('Lỗi khi lấy dữ liệu đề thi:', error);
+                        });
+                } else {
+                    // Nếu người dùng không xác nhận nộp bài
+                }
+            }
+
+    </script>
+</body>
+
+</html>

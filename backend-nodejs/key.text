@@ -1,0 +1,4 @@
+// Create table
+npx sequelize-cli model:generate --name Exam --attributes firstName:string,lastName:string,email:string
+// Create DB
+npx sequelize-cli db:migrate

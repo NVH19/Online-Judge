@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <link rel="icon" href="../image/logo_ptit.png" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: whitesmoke;
+            display: grid;
+            grid-template-rows: auto 1fr; 
+            min-height: 100vh;
+        }
+
+        .top {
+            background-color: rgb(226, 56, 56);
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 10px; 
+        }
+
+        .logo {
+            flex: 0 0 10%; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .text {
+            flex: 1; 
+            font-size: 30px; 
+            text-align: center;
+            color: white;
+            border-right: 1px solid #686767;
+        }
+
+        #bell {
+            font-size: 20px;
+            margin-top: 5px;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        .announcement {
+            width: 250px;
+            height: 350px;
+            border-radius: 10px;
+            background: rgb(214, 208, 196);
+            position: absolute;
+            top: calc(100% + 5px);
+            right: 30px;
+            text-align: center;
+            display: none;
+            z-index: 1;
+        }
+
+        .person {
+            position: relative;
+            display: flex;
+            padding-right: 30px; 
+        }
+
+        .profile-info {
+            display: none;
+            position: absolute;
+            top: calc(100% + 5px);
+            right: 0; 
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+        .person:hover .profile-info {
+            display: block;
+        }
+        .profile-info {
+            height: 78px;
+            width: 150px;
+            align-items: center;
+        }
+        .profile-info .acc{
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+
+        /* Add media query for responsiveness */
+        @media screen and (max-width: 768px) {
+            .text {
+                font-size: 20px; 
+            }
+
+            .search-bar {
+                margin-top: 20px;
+            }
+
+            .search-input {
+                width: 70%; 
+            }
+
+            .quiz-card {
+                width: 90%; 
+            }
+        }
+
+        .search{
+            border-radius: 10px;
+        }
+        .search-bar {
+            text-align: center;
+            margin-bottom: 50px; 
+            margin-top: 30px; 
+        }
+
+        .search-input {
+            width: 60%; 
+            max-width: 420px; 
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px; 
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-right: 10px;
+        }
+
+        .search-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 20px; 
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .search-button img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        .table{
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.15);
+            border-radius: 16px;
+            box-sizing: border-box;
+            width: 70%;
+            margin: 0 auto;
+            padding: 20px 0px;
+            margin-bottom: 20px;
+        }
+        .quiz-card {
+            width: 90%; 
+            max-width: 750px; 
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 30px auto;
+            transition: box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        /* Hover effect */
+        .quiz-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .left{
+            position: absolute;
+            height: 100%;
+            width: 10px;
+            background-color: green;
+        }
+        .quiz-card-header {
+            color: black;
+            padding: 5px;
+            position: relative;
+        }
+        .icon-clock{
+            position: absolute;
+            top: 23px;
+            right: 30px;
+            color: red;
+        }
+
+        .quiz-card-body {
+            color: #333;
+            font-family: "Nunito", sans-serif;
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: 400;
+        }
+
+
+        h2{
+            margin: 0px;
+        }
+        .quiz-card h2 {
+            margin: 10px 0px 10px 15px;
+            max-width: 60%;
+        }
+
+        /* Media query for responsiveness */
+        @media screen and (max-width: 768px) {
+            .search-input {
+                width: 70%; 
+                max-width: none; 
+            }
+
+            .search-button {
+                margin-left: 0; 
+            }
+
+            .quiz-card {
+                width: 90%; 
+                max-width: none; 
+            }
+        }
+        .num-exam{
+            background-image: url('../image/num-exam.png');
+            background-repeat: no-repeat;
+            background-position: left center;
+            padding-left: 20px;
+            margin-left: 20px;
+        }
+        .num-attemt{
+            background-image: url('../image/num-attempt.png');
+            background-repeat: no-repeat;
+            background-position: left center;
+            padding-left: 20px;
+            margin-left: 20px;
+        }
+        .quiz-card-footer {
+            background-color: #fff;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+        }
+        .quanlity{
+            height: 5px;
+            width: 78%;
+            border-radius: 10px;
+            background-color: gray;
+            margin-left: 10px;
+        }
+        .quiz-card-footer a{
+            background-color: #007bff;
+            box-shadow: 0px 0px 17px 2px rgba(232, 229, 229, 0.8);
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 20px;
+            width: 10%;
+            padding: 3px;
+        }
+        .quiz-card-footer a:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>      
+</head>
+<body>
+    <div class="top">
+        <div class="logo">
+            <img src="../image/logo_ptit.png" alt="logo_ptit" style="height: 35px; width: 30px;">
+        </div>
+        <div class="text">Hệ thống thi trắc nghiệm PTIT</div>
+        <div id="bell"><i class='bx bx-bell'></i></div>
+        <div class="announcement" id="announcement">
+            <h4>Thông báo</h4>
+        </div>
+        <div class="person" id="person">
+            <img id="profile-icon" src="../image/person.png" alt="" style="height: 30px; width: 30px; cursor: pointer; border-radius: 50%; margin-left: 60px;">
+            <div class="profile-info" id="profile-info">
+                <div class="acc"><a href="">Thông tin tài khoản</a></div>
+                <div class="acc"><a href="home">Đăng xuất</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="search-bar">
+            <select class="search" id="filterSelect" onchange="filterExams()">
+                <option value="all">Tất cả</option>
+                <option value="free-access">Tự do</option>
+                <option value="time-bound">Theo lịch</option>
+            </select>
+            <input type="search" class="search-input" id="searchInput" placeholder="Tìm kiếm...">
+            <button class="search-button" id="search-button"><img src="https://www.gstatic.com/images/icons/material/system/2x/search_black_24dp.png" alt="Search Icon">Tìm kiếm</button>
+        </div>
+        <div class="table" id="quizCardsContainer">
+            <!-- Quiz cards will be added here by JavaScript -->
+        </div>
+    </div>
+    <script>
+        
+        var profileIcon = document.getElementById("profile-icon");
+        var profileInfo = document.getElementById('profile-info');
+        var person = document.getElementById('person');
+
+        // Bắt sự kiện khi click vào icon
+        profileIcon.addEventListener('click', function(event) {
+            if (profileInfo.style.display === 'none') {
+                profileInfo.style.display = 'block';
+            } else {
+                profileInfo.style.display = 'none';
+            }
+            // Ngăn sự kiện click được lan truyền lên các phần tử cha khác
+            event.stopPropagation();
+        });
+
+        // Bắt sự kiện khi click ra ngoài icon và khung thông tin người dùng
+        document.addEventListener('click', function(event) {
+            var isClickInside = person.contains(event.target);
+            if (!isClickInside) {
+                profileInfo.style.display = 'none';
+            }
+        });
+
+        var bell = document.getElementById('bell');
+        var announcement = document.getElementById('announcement');
+        bell.addEventListener('click',function(event){
+            if (announcement.style.display === 'none') {
+                announcement.style.display = 'block';
+            } else {
+                announcement.style.display = 'none';
+            }
+            event.stopPropagation();
+        });
+        document.addEventListener('click', function(event) {
+            var isClickInside = bell.contains(event.target);
+            if (!isClickInside) {
+                announcement.style.display = 'none';
+            }
+        });
+
+
+        function formatISODateToDMY(isoDateString) {
+            const isoDate = new Date(isoDateString);
+            const day = isoDate.getDate();
+            const month = isoDate.getMonth() + 1; 
+            const year = isoDate.getFullYear();
+
+
+            const formattedDay = day < 10 ? '0' + day : day;
+            const formattedMonth = month < 10 ? '0' + month : month;
+            return `${formattedDay}/${formattedMonth}/${year}`;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('http://localhost:8081/getExam')
+                .then(response => response.json())
+                .then(data => {
+                    // Xử lý dữ liệu ở đây, ví dụ: tạo các thẻ câu hỏi từ dữ liệu
+                    var exam = data;
+                    var quizCardsContainer = document.getElementById("quizCardsContainer");
+
+                    exam.forEach(function (examItem) {
+                        var quizCard = createQuizCard(examItem);
+                        quizCardsContainer.appendChild(quizCard);
+                    });
+                    function createQuizCard(examItem) {
+                        // Create elements
+                        var quizCard = document.createElement("div");
+                        quizCard.classList.add("quiz-card");
+                        quizCard.classList.add("exam");
+                        if (examItem.isTimeBound) {
+                            quizCard.classList.add("time-bound");
+                        }
+                        else {
+                            quizCard.classList.add("free-access");
+                        }
+                        var left = document.createElement("div");
+                        left.classList.add("left");
+                        if (examItem.isTimeBound) {
+                            left.style.backgroundColor = 'red';
+                        }
+
+                        var header = document.createElement("div");
+                        header.classList.add("quiz-card-header");
+
+                        var h2 = document.createElement("h2");
+                        h2.textContent = examItem.nameExam;
+
+                        var iconClock = document.createElement("div");
+                        iconClock.classList.add("icon-clock");
+                        iconClock.innerHTML = "<i class='fa fa-clock-o' id='icon_clock' style='color: red'></i> " + examItem.duration;
+
+                        var body = document.createElement("div");
+                        body.classList.add("quiz-card-body");
+
+                        var numExam = document.createElement("div");
+                        var dateF = examItem.date;
+                        console.log(dateF);
+                        if(dateF!= null){
+                            dateF = formatISODateToDMY(dateF);
+                        }
+                        numExam.classList.add("num-exam");
+                        numExam.textContent = dateF;
+
+
+                        var numAttempt = document.createElement("div");
+                        numAttempt.classList.add("num-attemt");
+                        numAttempt.textContent = examItem.attempts + " lượt thi";
+
+                        var paragraph = document.createElement("p");
+                        paragraph.textContent = "0/"+examItem.questions;
+                        paragraph.style.margin = "0";
+                        paragraph.style.marginLeft = "20px";
+                        paragraph.style.marginBottom = "-20px";
+                        paragraph.style.marginTop = "10px";
+
+                        var footer = document.createElement("div");
+                        footer.classList.add("quiz-card-footer");
+
+                        var quanlity = document.createElement("div");
+                        quanlity.classList.add("quanlity");
+
+                        var link = document.createElement("a");
+                        link.setAttribute("href", examItem.href);
+                        link.textContent = "Làm bài";
+
+                        // Append elements
+                        header.appendChild(h2);
+                        header.appendChild(iconClock);
+
+                        body.appendChild(numExam);
+                        body.appendChild(numAttempt);
+
+                        footer.appendChild(quanlity);
+                        footer.appendChild(link);
+
+                        quizCard.appendChild(left);
+                        quizCard.appendChild(header);
+                        quizCard.appendChild(body);
+                        quizCard.appendChild(paragraph);
+                        quizCard.appendChild(footer);
+
+                        return quizCard;
+                    }
+                    console.log(data); // Dữ liệu từ cơ sở dữ liệu MySQL
+                })
+                .catch(error => {
+                    console.error('Lỗi khi gửi yêu cầu API:', error);
+                });
+            // Function to create a quiz card
+            // var exam = [
+            //     {nameExam: 'Đề thi thử Mạng máy tính', duration: '80 phút', attempts: '219',questions: '0/10', href: "../exam/exam.html", isTimeBound: false},
+            //     {nameExam: 'Đề thi cuối kì Cơ sở dữ liệu', duration: '80 phút', attempts: '0',date: '11/04/2024', questions: '0/40',href: "", isTimeBound: true},
+            //     {nameExam: 'Đề thi thử Cơ sở dữ liệu', duration: '60 phút', attempts: '55',questions: '0/10',href: "", isTimeBound: false},
+            //     {nameExam: 'Đề thi giữa kì Cơ sở dữ liệu', duration: '60 phút', attempts: '0',date: '15/05/2024', questions: '0/40',href: "", isTimeBound: true},
+            //     {nameExam: 'Đề thi thử Nhập môn AI', duration: '20 phút', attempts: '532',questions: '0/10',href: "", isTimeBound: false},
+            //     {nameExam: 'Đề thi thử Toán rời rạc 1', duration: '15 phút', attempts: '862',questions: '0/10',href: "", isTimeBound: false},
+            //     {nameExam: 'Đề thi thử Toán rời rạc 2', duration: '20 phút', attempts: '21',questions: '0/10',href: "", isTimeBound: false},
+            //     {nameExam: 'Đề thi cuối kì Lịch sử đảng', duration: '90 phút', attempts: '0',date: '29/05/2024', questions: '0/40',href: "", isTimeBound: true},
+            //     {nameExam: 'Đề thi giữa kì Lập trình Web', duration: '60 phút', attempts: '0',date: '02/06/2024', questions: '0/20',href: "", isTimeBound: true},
+            //     {nameExam: 'Đề thi thử Xác suất thống kê', duration: '10 phút', attempts: '345', questions: '0/10',href: "", isTimeBound: false}
+            // ]
+            // Insert quiz cards into the container
+            
+
+        });
+
+
+
+
+        // tìm kiếm theo tên
+        document.getElementById('search-button').addEventListener('click', function() {
+            var filter = document.getElementById('searchInput').value.toLowerCase();
+            var examItems = document.getElementsByClassName('exam');
+
+            Array.from(examItems).forEach(function(item) {
+                var examName = item.textContent.toLowerCase();
+                if (examName.indexOf(filter) > -1) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+        // document.getElementById('search-button').addEventListener('click', async function () {
+        //         var filter = document.getElementById('searchInput').value.toLowerCase();
+
+        //         try {
+        //             // Gửi yêu cầu GET đến máy chủ sử dụng fetch
+        //             const response = await fetch(`/searchExam?nameExam=${filter}`);
+
+        //             if (!response.ok) {
+        //                 throw new Error('Có lỗi xảy ra khi gửi yêu cầu.');
+        //             }
+
+        //             const data = await response.json();
+
+        //             // Xử lý dữ liệu phản hồi từ máy chủ
+        //             if (data.status === 200) {
+        //                 // Hiển thị kết quả tìm kiếm
+        //                 console.log('Kết quả tìm kiếm:', data.data);
+        //                 Array.from(document.getElementsByClassName('exam')).forEach(function (item) {
+        //                     var examName = item.textContent.toLowerCase();
+        //                     if (examName.indexOf(filter) > -1) {
+        //                         item.style.display = 'block';
+        //                     } else {
+        //                         item.style.display = 'none';
+        //                     }
+        //                 });
+        //             } else {
+        //                 console.log('Không tìm thấy kì thi!');
+        //                 // Hiển thị thông báo không tìm thấy kì thi
+        //             }
+        //         } catch (error) {
+        //             console.error('Đã xảy ra lỗi:', error);
+        //             // Xử lý lỗi nếu có
+        //         }
+        //     });
+
+        // tìm kiếm theo trạng thái
+        function filterExams() {
+            var selectedStatus = document.getElementById("filterSelect").value;
+            var exams = document.getElementsByClassName("exam");
+
+            for (var i = 0; i < exams.length; i++) {
+                var examItem = exams[i];
+
+                if (selectedStatus === "all") {
+                    examItem.style.display = "block"; // Hiển thị tất cả các kỳ thi
+                } else if (selectedStatus === "free-access" && examItem.classList.contains("free-access")) {
+                    examItem.style.display = "block"; // Hiển thị các kỳ thi có thể truy cập tự do
+                } else if (selectedStatus === "time-bound" && examItem.classList.contains("time-bound")) {
+                    examItem.style.display = "block"; // Hiển thị các kỳ thi có yêu cầu thời gian cụ thể
+                } else {
+                    examItem.style.display = "none"; // Ẩn các kỳ thi không phù hợp với trạng thái được chọn
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>
